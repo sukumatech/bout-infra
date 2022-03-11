@@ -249,9 +249,16 @@ module "gke" {
 module "my-app-workload-identity" {
   source     = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
   name       = "iden-${module.gke.name}"
-  //namespace  = "dev"
+  namespace  = "dev"
   project_id = var.project_id_a
-  roles      = ["roles/storage.admin", "roles/compute.admin"]
+  roles      = [
+    "roles/storage.admin", 
+    "roles/compute.admin", 
+    "roles/cloudtrace.agent", 
+    "roles/monitoring.metricWriter",
+    "roles/cloudprofiler.agent",
+    "roles/clouddebugger.agent",
+    ]
   use_existing_k8s_sa = false
 }
 
