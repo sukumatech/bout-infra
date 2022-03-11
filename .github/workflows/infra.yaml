@@ -30,21 +30,21 @@ jobs:
 
             # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform -chdir=profiles init
+        run: terraform -chdir=profile init
 
       # Checks that all Terraform Display diffs of formatting changes
       - name: Terraform Format Diffrences
-        run: terraform -chdir=profiles fmt --diff
+        run: terraform -chdir=profile fmt --diff
       
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
-        run: terraform -chdir=profiles fmt -check
+        run: terraform -chdir=profile fmt -check
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan 
-        run: terraform -chdir=profiles plan
+        run: terraform -chdir=profile plan
       
       #Apply the plan
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: terraform -chdir=profiles -auto-approve
+        run: terraform -chdir=profile -auto-approve
