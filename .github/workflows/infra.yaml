@@ -29,8 +29,6 @@ jobs:
         with:
           cluster_name: boutique-cluster
           location: europe-north1
-      - id: get-pods
-        run: kubectl get pods
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -45,5 +43,5 @@ jobs:
 
       #Apply the plan
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform -chdir=profile -auto-approve 
