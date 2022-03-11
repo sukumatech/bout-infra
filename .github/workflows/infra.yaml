@@ -1,0 +1,63 @@
+name: Build terraform infra
+on:
+  push:
+    branches: [main]
+jobs:
+  setup-build:
+    name: Terraform
+    runs-on: ubuntu-latest
+
+    #use bash
+    defaults:
+      run:
+        shell: bash
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          workload_identity_provider: 'projects/964789007787/locations/global/workloadIdentityPools/example-pool/providers/example-gh-provider'
+          service_account: 'terraform-admin@team-4-a.iam.gserviceaccount.com'
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+            # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform -chdir=profiles/cloudrun init
+        with:
+          workload_identity_provider: 'projects/964789007787/locations/global/workloadIdentityPools/example-pool/providers/example-gh-provider'
+          service_account: 'terraform-admin@team-4-a.iam.gserviceaccount.com'
+
+
+      # Checks that all Terraform Display diffs of formatting changes
+      - name: Terraform Format Diffrences
+        run: terraform -chdir=profiles fmt --diff
+      
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform -chdir=profiles fmt -check
+
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan 
+        run: terraform -chdir=profiles plan
+        with:
+          workload_identity_provider: 'projects/964789007787/locations/global/workloadIdentityPools/example-pool/providers/example-gh-provider'
+          service_account: 'terraform-admin@team-4-a.iam.gserviceaccount.com'
+
+      
+      #Apply the plan
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: terraform -chdir=profiles -auto-approve
+        with:
+          workload_identity_provider: 'projects/964789007787/locations/global/workloadIdentityPools/example-pool/providers/example-gh-provider'
+          service_account: 'terraform-admin@team-4-a.iam.gserviceaccount.com'
+
+      
