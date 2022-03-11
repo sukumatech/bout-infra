@@ -48,4 +48,4 @@ jobs:
         run: terraform -chdir=profile -auto-approve 
         env:
           workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
-          service_account: ${{ secrets.SA_EMAIL }}
+          service_account: ${{ secrets.SA_EMAIL }} 
