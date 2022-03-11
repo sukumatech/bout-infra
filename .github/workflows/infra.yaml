@@ -31,10 +31,6 @@ jobs:
             # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
         run: terraform -chdir=profiles/cloudrun init
-        with:
-          workload_identity_provider: 'projects/964789007787/locations/global/workloadIdentityPools/example-pool/providers/example-gh-provider'
-          service_account: 'terraform-admin@team-4-a.iam.gserviceaccount.com'
-
 
       # Checks that all Terraform Display diffs of formatting changes
       - name: Terraform Format Diffrences
@@ -47,10 +43,6 @@ jobs:
       # Generates an execution plan for Terraform
       - name: Terraform Plan 
         run: terraform -chdir=profiles plan
-        with:
-          workload_identity_provider: 'projects/964789007787/locations/global/workloadIdentityPools/example-pool/providers/example-gh-provider'
-          service_account: 'terraform-admin@team-4-a.iam.gserviceaccount.com'
-
       
       #Apply the plan
       - name: Terraform Apply
