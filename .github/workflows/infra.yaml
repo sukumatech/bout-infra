@@ -24,6 +24,13 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
           service_account: ${{ secrets.SA_EMAIL }}
+      - id: get-gke-credentials
+        uses: google-github-actions/get-gke-credentials@v0.4.0
+        with:
+          cluster_name: my-cluster
+          location: us-central1-a
+      - id: get-pods
+        run: kubectl get pods
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
