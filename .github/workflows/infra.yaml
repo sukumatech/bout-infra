@@ -47,4 +47,4 @@ jobs:
       #Apply the plan
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: terraform -chdir=profile -auto-approve
+        run: terraform -chdir=profile -auto-approve 
