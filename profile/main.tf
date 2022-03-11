@@ -245,7 +245,7 @@ module "gke" {
 # ---------------------------------------------------------------------------------------------------------------------
 # workload identity
 # ---------------------------------------------------------------------------------------------------------------------
-/*
+
 module "my-app-workload-identity" {
   source     = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
   name       = "iden-${module.gke.name}"
@@ -262,4 +262,4 @@ resource "kubernetes_namespace" "dev" {
     }
     name = "dev"
   }
-}*/
+}
