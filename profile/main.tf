@@ -217,7 +217,7 @@ module "gke" {
       max_count         = 15
       auto_repair       = true
       auto_upgrade      = true
-      preemptible       = false
+      preemptible       = true
     },
   ]
 
@@ -237,6 +237,14 @@ module "gke" {
   "min_cpu_cores": 2,
   "min_memory_gb": 4
 }
+
+node_pools_oauth_scopes = {
+    all = []
+
+    default-node-pool = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
+  }
 }
 
 
