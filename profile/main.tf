@@ -217,7 +217,7 @@ module "gke" {
       max_count         = 15
       auto_repair       = true
       auto_upgrade      = true
-      preemptible       = true
+      preemptible       = false
     },
   ]
 
