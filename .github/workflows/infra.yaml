@@ -24,11 +24,11 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
           service_account: ${{ secrets.SA_EMAIL }}
-      - id: get-gke-credentials
-        uses: google-github-actions/get-gke-credentials@v0.4.0
-        with:
-          cluster_name: boutique-cluster
-          location: europe-north1
+      # - id: get-gke-credentials
+      #   uses: google-github-actions/get-gke-credentials@v0.4.0
+      #   with:
+      #     cluster_name: boutique-cluster
+      #     location: europe-north1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
